@@ -1,0 +1,12 @@
+﻿@model Videoo.Models.Movie
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Name</h2>
+<h3>Genre: @Model.Genre.Name</h3>
+<h3> Release Date: @Model.ReleaseDate</h3>
+<h3>Date Added To Database: @Model.AddedToDatabase</h3>
+<h3>No. In Stock: @Model.NumberInStock</h3>
+

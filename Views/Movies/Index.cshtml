@@ -1,0 +1,22 @@
+﻿@model Videoo.ViewModels.RandomMovieViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>View Movies</h2>
+@if (Model.movies.Count==0)
+{
+    <p>We don't have any movies.</p>
+}
+else
+{
+    <ul>
+        @foreach (var movie in Model.movies)
+        {
+            <li>@movie.Name</li>
+
+        }
+    </ul>
+}

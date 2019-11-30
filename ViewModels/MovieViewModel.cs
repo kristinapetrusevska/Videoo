@@ -9,5 +9,7 @@ namespace Videoo.ViewModels
     public class MovieViewModel
     {
         public List<Movie> movies;
+        public Movie movie { get; set; }
+        public IEnumerable<Genre> Genres { get; set; }
     }
 }

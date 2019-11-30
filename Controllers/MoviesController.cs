@@ -20,29 +20,64 @@ namespace Videoo.Controllers
         {
             _context.Dispose();
         }
-        public ActionResult Edit(int id)
-        {
-            return Content("id=" + id);
-        }
-
+        
         //movies
         public ActionResult Index()
         {
-            var movie = _context.Movies.Include(c=>c.Genre).ToList();
-            
+            var movie = _context.Movies.Include(c => c.Genre).ToList();
+
             return View(movie);
         }
-        public ActionResult Details (int id)
+        public ActionResult Details(int id)
         {
             var movie = _context.Movies.Include(c => c.Genre).SingleOrDefault(d => d.Id == id);
             if (movie == null) return HttpNotFound();
             else return View(movie);
         }
-        public ActionResult ByReleaseDate(int year,int month)
+        public ActionResult ByReleaseDate(int year, int month)
         {
 
-            return Content(year+"/"+month);
+            return Content(year + "/" + month);
 
+        }
+        public ActionResult New()
+        {
+            var genres = _context.Genres.ToList();
+            var newModel = new MovieViewModel()
+            {
+                Genres = genres
+            };
+            return View("MovieForm", newModel);
+        }
+        [HttpPost]
+        public ActionResult Save(Movie movie)
+        {
+            if (movie.Id == 0)
+                _context.Movies.Add(movie);
+            else
+            {
+                var movieInDb = _context.Movies.Single(c => c.Id == movie.Id);
+                movieInDb.Name = movie.Name;
+                movieInDb.GenreId = movie.GenreId;
+               // movieInDb.Genre.Name = _context.Genres.Single(c => c.Id == movieInDb.Genre.Id).Name;
+                movieInDb.NumberInStock = movie.NumberInStock;
+                movieInDb.ReleaseDate = movie.ReleaseDate;
+                movieInDb.AddedToDatabase =DateTime.Today;
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Movies");
+
+        }
+        public ActionResult Edit(int id)
+        {
+            var movie = _context.Movies.SingleOrDefault(c => c.Id == id);
+            if (movie == null) return HttpNotFound();
+            var viewModel = new MovieViewModel()
+            {
+                Genres = _context.Genres.ToList(),
+                movie=movie
+            };
+            return View("MovieForm", viewModel);
         }
         // GET: Movies/random
         //public ActionResult Random()

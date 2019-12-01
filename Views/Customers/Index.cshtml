@@ -29,10 +29,11 @@ else
         <tbody>
             @for (int i = 0; i < Model.Count(); i++)
             {
-                <tr>
-                    <td>@Html.ActionLink(Model.ElementAt(i).Name, "Edit", "Customers", new { id = Model.ElementAt(i).Id }, null)</td>
-                    <td>@Model.ElementAt(i).MembershipType.Name</td>
-                </tr>
+            <tr>
+                <td>@Html.ActionLink(Model.ElementAt(i).Name, "Edit", "Customers", new { id = Model.ElementAt(i).Id }, null)</td>
+                <td>@Model.ElementAt(i).MembershipType.Name</td>
+                <td>@Html.ActionLink("Delete", "Delete", "Customers", new { id = Model.ElementAt(i).Id }, null)</td>
+            </tr>
             }
         </tbody>
     </table>

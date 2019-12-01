@@ -78,5 +78,12 @@ namespace Videoo.Controllers
             };
             return View("CustomerForm",viewModel);
         }
+        public ActionResult Delete(int id)
+        {
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+            _context.Customers.Remove(customer);
+            _context.SaveChanges();            
+            return RedirectToAction("Index", "Customers");
+        }
     }
 }

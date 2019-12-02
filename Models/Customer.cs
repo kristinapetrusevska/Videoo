@@ -14,7 +14,7 @@ namespace Videoo.Models
         [Required]
         [StringLength(255)]
         public string Name { get; set; }
-       
+        [CheckAge]
         public DateTime? Birthday { get; set; }
 
         public bool IsSubscribedToNewsletter { get; set; }

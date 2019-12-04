@@ -6,8 +6,10 @@
 
 <h2>@Model.Name</h2>
 
-<h3>Membership Type: @Model.MembershipType.Name</h3>
+<h5>Membership Type: @Model.MembershipType.Name</h5>
 @if (Model.Birthday != null)
 {
-<h3>Birthday: @Model.Birthday</h3>
+<h5>Birthday: @Model.Birthday.Value.ToString("d MMM yyy")</h5>
 }
+<h5>The customer is @(Model.IsSubscribedToNewsletter? " " : "not") subscribed to the newsletter.</h5>
+

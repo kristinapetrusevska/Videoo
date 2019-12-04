@@ -34,12 +34,7 @@ namespace Videoo.Controllers
             if (movie == null) return HttpNotFound();
             else return View(movie);
         }
-        public ActionResult ByReleaseDate(int year, int month)
-        {
-
-            return Content(year + "/" + month);
-
-        }
+        
         public ActionResult New()
         {
             var genres = _context.Genres.ToList();
@@ -69,7 +64,6 @@ namespace Videoo.Controllers
                 var movieInDb = _context.Movies.Single(c => c.Id == movie.Id);
                 movieInDb.Name = movie.Name;
                 movieInDb.GenreId = movie.GenreId;
-               // movieInDb.Genre.Name = _context.Genres.Single(c => c.Id == movieInDb.Genre.Id).Name;
                 movieInDb.NumberInStock = movie.NumberInStock;
                 movieInDb.ReleaseDate = movie.ReleaseDate;
                 movieInDb.AddedToDatabase =DateTime.Today;
@@ -89,20 +83,12 @@ namespace Videoo.Controllers
             };
             return View("MovieForm", viewModel);
         }
-        // GET: Movies/random
-        //public ActionResult Random()
-        //{
-        //    var movie = new Movie() { Name="Shrek!"};
-        //    var customers = new List<Customer> {
-        //        new Customer{Name="Customer 1"},
-        //        new Customer{Name="Customer 2"},
-        //        new Customer{Name="Customer 3"}
-        //    };
-        //    var viewModel = new RandomMovieViewModel() {
-        //        Movie = movie,
-        //        Customers=customers
-        //    };
-        //    return View(viewModel);
-        //}
+        public ActionResult Delete(int id)
+        {
+            var movie = _context.Movies.SingleOrDefault(c => c.Id == id);
+            _context.Movies.Remove(movie);
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Movies");
+        }
     }
 }

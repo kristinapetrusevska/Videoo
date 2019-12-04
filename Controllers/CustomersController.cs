@@ -20,18 +20,17 @@ namespace Videoo.Controllers
         {
             _context.Dispose();
         }
-        //List<Customer> Customers = new List<Customer>() {
-        //        new Customer{Name="Customer 1",Id=1},
-        //        new Customer{Name="Customer 2",Id=2},
-        //        new Customer{Name="Customer 3",Id=3}
-        //    };
-        // GET: Customers
-        public ViewResult Index()
+        public ViewResult Index(string id)
         {
-
-            var customers = _context.Customers.Include(c => c.MembershipType).ToList();
-            //var custModel = new RandomMovieViewModel() {
-            //    customers = Customers };
+            var customers= new List<Customer>();
+            if (!String.IsNullOrEmpty(id))
+            {
+                customers = _context.Customers.Where(s => s.Name.Contains(id)).Include(c => c.MembershipType).ToList();
+            }
+            else
+            {
+                customers = _context.Customers.Include(c => c.MembershipType).ToList();
+            }
             return View(customers);
         }
         public ActionResult Details(int id)
@@ -96,5 +95,7 @@ namespace Videoo.Controllers
             _context.SaveChanges();            
             return RedirectToAction("Index", "Customers");
         }
+
+        
     }
 }

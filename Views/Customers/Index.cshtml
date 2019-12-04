@@ -7,8 +7,20 @@
 <h2>View Customers</h2>
 
 <h2> </h2>
-<button type="submit"> @Html.ActionLink("New", "New")</button>
+<button type="submit"> @Html.ActionLink("New Customer", "New")</button>
 <h2> </h2>
+
+
+<form asp-controller="Customers" asp-action="Index">
+    <p>
+        <input type="text" name="id">
+        <input type="submit" value="Filter" />
+        
+    </p>
+</form>
+@if (!HttpContext.Current.Request.QueryString.Get("id").IsEmpty()) {
+<h5>@Html.ActionLink("Go back to original list", "Index", "Customers")</h5>
+}
 
 
 
@@ -30,8 +42,9 @@ else
             @for (int i = 0; i < Model.Count(); i++)
             {
             <tr>
-                <td>@Html.ActionLink(Model.ElementAt(i).Name, "Edit", "Customers", new { id = Model.ElementAt(i).Id }, null)</td>
+                <td>@Html.ActionLink(Model.ElementAt(i).Name, "Details", "Customers", new { id = Model.ElementAt(i).Id }, null)</td>
                 <td>@Model.ElementAt(i).MembershipType.Name</td>
+                <td>@Html.ActionLink("Edit", "Edit", "Customers", new { id = Model.ElementAt(i).Id }, null)</td>
                 <td>@Html.ActionLink("Delete", "Delete", "Customers", new { id = Model.ElementAt(i).Id }, null)</td>
             </tr>
             }
